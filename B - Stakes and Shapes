@@ -1,0 +1,12 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int T; cin >> T;
+    while(T--){
+        int X,Y,Z; cin >> X >> Y >> Z;
+        char C = Z >= X ? 'S' : (Y >= Z ? 'R' : 'P');
+        cout << string(X+Y+Z,C) << "\n";
+    }
+}
