@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int T; cin >> T;
+    while(T--){
+        int Num; cin >> Num;
+        vector<ll> f[2];
+        ll St = 0;
+        for(int i = 0; i < Num; i++){
+            ll X; cin >> X; St += X; f[i&1].push_back(X);
+        }
+        sort(f[0].begin(),f[0].end());
+        sort(f[1].begin(),f[1].end());
+        int Mn = min(f[0].size(),f[1].size());
+        ll B = St,Pump = 0;
+        for(int j = 0 ; j < Mn; j++) {
+            Pump += f[0][j] + f[1][j];
+            B = max(B,St-2*Pump);
+        }
+        cout << B << "\n";
+    }
+}
