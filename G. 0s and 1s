@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+ 
+const int mod = 998'244'353;
+
+const int MX = 200005;
+vector<int> p2(MX, 1);
+void init(){
+    for(int i = 1; i < MX; i++) p2[i] = 2 * p2[i - 1] % mod;
+}
+ 
+int main(){
+
+    init();
+ 
+    int t;
+    cin >> t;
+ 
+    while(t--){
+        int n;
+        cin >> n;
+
+        vector<vector<int>> v(n + 1);
+        for(int i = 1; i < n; i++){
+            int x, y;
+            cin >> x >> y;
+            v[x].push_back(y);
+            v[y].push_back(x);
+        }
+
+        string x, y;
+        cin >> x >> y;
+        x = "." + x;
+        y = "." + y;
+
+        vector<int> dep(n + 1, 0), par(n + 1, 0);
+
+        function<void(int, int)> dfs = [&](int u, int p){
+            for(auto& z : v[u]) if(z != p){
+                par[z] = u;
+                dep[z] = 1 + dep[u];
+                dfs(z, u);
+            }
+        };
+
+        dfs(1, -1);
+
+        vector<int> carry(n + 1, 0);
+        vector<vector<int>> nodes(n);
+        for(int i = 1; i <= n; i++) nodes[dep[i]].push_back(i);
+
+        int ans = 0;
+        bool is = 1;
+        for(int i = 0; i < n && is; i++){
+            bool req[2] = {0, 0};
+            for(auto& z : nodes[i]){
+                int xb = x[z] - '0';
+                int yb = y[z] - '0';
+                int cb = carry[par[z]];
+                int rb = xb ^ yb ^ cb;
+                req[rb] = 1;
+                if(xb + cb + rb > 1) carry[z] = 1;
+            }
+            if(req[0] && req[1]) is = 0;
+            ans += req[1] * p2[i];
+            ans %= mod;
+        }
+
+        if(!is) ans = -1;
+        cout << ans << '\n';
+    }
+ 
+    return 0;
+}
