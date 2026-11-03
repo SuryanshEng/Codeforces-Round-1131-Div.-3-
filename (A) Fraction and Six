@@ -1,0 +1,18 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int T; cin >> T;
+    while(T--){
+        int N,M; string P,Q; cin >> N >> M >> P >> Q;
+        int C[26] = {};
+        for(char X:P) C[X-'a']++;
+        for(char X:Q) C[X-'a']--;
+        int W[26] = {};
+        W['s'-'a'] = W['i'-'a'] = W['x'-'a'] = 1;
+        bool okbye = true;
+        for(int i = 0; i < 26; i++) okbye &= C[i] == W[i];
+        cout << (okbye ? "YES":"NO") << "\n";
+    }
+}
