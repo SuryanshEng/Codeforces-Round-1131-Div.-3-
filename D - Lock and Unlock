@@ -1,0 +1,17 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int T; cin >> T;
+    while(T--){
+        int Num; cin >> Num;
+        vector<ll> A(Num);
+        for(auto&X:A) cin >> X;
+        sort(A.begin(),A.end());
+        ll Mum = A[Num/2], St = 0;
+        for(ll X:A) St += llabs(X-Mum);
+        cout << St << " " << A[Num-1]-A[0] << "\n";
+    }
+}
